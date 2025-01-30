@@ -4,11 +4,13 @@ import { OAuth2Client } from "google-auth-library";
 import dotenv from "dotenv";
 import routerRegistry from "./routes/index.js";
 import mongoose from "mongoose";
+import path from "path";
+const __dirname = path.resolve(); // Get the root directory path
 
 dotenv.config(); // Load environment variables from .env file
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 // Convert ALLOWED_ORIGINS from .env to an array
 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(",");
 // MongoDB connection
@@ -19,6 +21,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: function (origin, callback) {
+      console.log(origin);
       // Check if the origin is in the allowedOrigins list or if origin is undefined (non-browser requests like Postman)
       if (allowedOrigins.includes(origin) || !origin) {
         callback(null, true);
@@ -35,7 +38,14 @@ app.use(
 // Serve uploaded images statically
 console.log("Setting static directory to /public");
 // Serve the 'public' directory as a static folder
-app.use("/public", express.static("public")); // This exposes the 'public' folder at '/public'
+// app.use("/public", express.static("public")); // This exposes the 'public' folder at '/public'
+// Serve the built React app statically
+app.use(express.static(path.join(__dirname, "public")));
+
+// Catch-all route to serve React frontend for undefined routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 
 // Connect to MongoDB and ensure database/collection existence
 const initializeDatabase = async () => {

@@ -1,3 +1,5 @@
+import { response } from "express";
+
 export const setResponse = (data, response) => {
     console.log("Response Data:", data);
     response.status(200).json({
@@ -25,3 +27,21 @@ export const setTokenMissingResponse = (response) => {
         code: "BadRequest", // Error code for token missing
     });
 };
+
+export const setImageUploadErrorResponse = (response) => {
+    response.status(400).json({
+        success: false, // Indicates failure
+        data: null, // No data for token missing errors
+        message: "Error uploading image", // Clear error message
+        code: "BadRequest", // Error code for token missing
+    });
+};
+
+export const setFieldMissingResponse = (response) => {
+    response.status(400).json({
+      success: false, // Indicates failure
+      data: null, // No data for token missing errors
+      message: "All fields are required.", // Clear error message
+      code: "BadRequest", // Error code for token missing
+    });
+}

@@ -5,7 +5,12 @@ import dotenv from "dotenv";
 import routerRegistry from "./routes/index.js";
 import mongoose from "mongoose";
 import path from "path";
-const __dirname = path.resolve(); // Get the root directory path
+import { fileURLToPath } from "url";
+
+// const __dirname = path.resolve(); // Get the root directory path
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -35,16 +40,24 @@ app.use(
   })
 );
 
-// Serve uploaded images statically
-console.log("Setting static directory to /public");
-// Serve the 'public' directory as a static folder
-// app.use("/public", express.static("public")); // This exposes the 'public' folder at '/public'
-// Serve the built React app statically
-app.use(express.static(path.join(__dirname, "public")));
+// Register API routes before serving static files
+console.log("Registering routes on the server...");
+routerRegistry(app); // Make sure this registers API routes like `/api/postcards`
 
-// Catch-all route to serve React frontend for undefined routes
+// Serve the 'public' directory as a static folder
+console.log("Setting static directory to /public/uploads");
+app.use("/public/uploads", express.static(path.join(__dirname, "public/uploads")));
+
+// 🔹 Serve React frontend from `dist` folder (Assuming Vite build outputs to `dist`)
+const frontendPath = path.join(__dirname, "dist");
+app.use(express.static(frontendPath));
+
+// Catch-all route for React frontend
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "index.html"));
+// });
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(frontendPath, "index.html"));
 });
 
 // Connect to MongoDB and ensure database/collection existence
@@ -58,9 +71,6 @@ const initializeDatabase = async () => {
     process.exit(1); // Exit the process with an error code if initialization fails
   }
 };
-
-console.log("Registering routes on the server...");
-routerRegistry(app);
 
 // Start the server only after the database is initialized
 initializeDatabase().then(() => {

@@ -75,6 +75,6 @@ const initializeDatabase = async () => {
 // Start the server only after the database is initialized
 initializeDatabase().then(() => {
   app.listen(PORT, () =>
-    console.log(`Server running on http://localhost:${PORT}`)
+    console.log(`Server running on Render ${PORT}`)
   );
 });

@@ -5,6 +5,7 @@ export const createPostcardLogic = async ({ image, text, creator }) => {
   try {
     // Create a new postcard object
     const postcard = new Postcard({
+      title,
       image,
       text,
       creator,

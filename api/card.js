@@ -1,7 +1,7 @@
 import Postcard from "../models/Postcard.js";
 
 // Core logic to create a postcard
-export const createPostcardLogic = async ({ image, text, creator }) => {
+export const createPostcardLogic = async ({ title, image, text, creator }) => {
   try {
     // Create a new postcard object
     const postcard = new Postcard({

@@ -13,9 +13,9 @@ import {
 import { cloudinaryUpload } from "../api/upload.js";
 
 export const createPostcard = async (req, res) => {
-  const { text, creator } = req.body;
+  const { title, text, creator } = req.body;
 
-  if (!req.file || !text || !creator) {
+  if (!title || !req.file || !text || !creator) {
     setFieldMissingResponse(res);
     return;
   }

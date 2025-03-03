@@ -29,21 +29,9 @@ export const createPostcard = async (req, res) => {
   }
 
   try {
-    // // Normalize the file path to use forward slashes
-    // let imagePath;
-    // // Check if `req.body.image` exists and normalize it
-    // if (req.body.image) {
-    //   imagePath = req.body.image.replace(/\\/g, "/");
-    // } else if (req.file && req.file.path) {
-    //   console.log(req.file.path);
-    //   // Otherwise, check if `req.file.path` exists and normalize it
-    //   imagePath = req.file.path.replace(/\\/g, "/");
-    // } else {
-    //   throw new Error("Image path is missing."); // Handle the case where no image is provided
-    // }
-
     // Call the core logic to create the postcard in MongoDB
     const postcard = await createPostcardLogic({
+      title,
       image: cloudinaryResponse,
       text,
       creator,

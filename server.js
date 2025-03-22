@@ -26,7 +26,6 @@ app.use(express.json());
 app.use(
   cors({
     origin: function (origin, callback) {
-      console.log(origin);
       // Check if the origin is in the allowedOrigins list or if origin is undefined (non-browser requests like Postman)
       if (allowedOrigins.includes(origin) || !origin) {
         callback(null, true);

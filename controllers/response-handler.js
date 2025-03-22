@@ -1,7 +1,6 @@
 import { response } from "express";
 
 export const setResponse = (data, response) => {
-    console.log("Response Data:", data);
     response.status(200).json({
         success: true, // Indicates success
         data: data || null, // Data payload
@@ -10,7 +9,6 @@ export const setResponse = (data, response) => {
 };
 
 export const setErrorResponse = (error, response) => {
-    console.error("Error:", error);
     response.status(500).json({
         success: false, // Indicates failure
         data: null, // No data for errors

@@ -49,6 +49,12 @@ git clone https://github.com/Gizmosoft/graver-server.git
 ```
 
 - Ensure you have [Node 22.x](https://nodejs.org/en/download) installed along with [npm package manager](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)  
+- Run the below command to install all the dependencies:  
+
+```bash
+npm install
+```
+
 - The application uses [MongoDB](https://www.mongodb.com/) for database, [Cloudinary](https://cloudinary.com/) for image storage and retrieval from the cloud and [GroqAI's inference engine](https://groq.com/) for postcard message generation using Llama 3.3-70b. You must have your MongoDB URI along with API keys for Cloudinary and GroqAI to begin with  
 - Create a `.env` file in the root directory (where package.json file exists) with all the variables defined. Refer to the `env.txt` file to know about the variables required for the project  
 - Run the below command to start the Node.js server in the dev mode (using nodemon):
